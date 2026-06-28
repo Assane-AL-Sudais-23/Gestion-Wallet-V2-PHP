@@ -4,6 +4,8 @@
 
     global $telephones;
     global $soldes;
+    global $clients;
+    global $transactions;
 
     function menu(){
         echo " Menu \n";
@@ -15,19 +17,24 @@
         return $ch;
     }
 
-    // function afficherMessage(string $message): void{
-    //     echo $message;
-    // }
+    function afficherTransaction(array $clients, array $transactions){
+        for($i = 0; $i < count($clients); $i++){
+            echo "Nom : " . $clients[$i] . "\n";
+            for($j = 0; $j < count($transactions); $j++){
+                echo "transaction : " . $transactions[$i][$j] . "cfa \n";
+            }
+        }
+    }
 
 
     do {
         menu();
         $choix = choixUser();
         
-        controller($choix,$telephones,$soldes);
+        controller($choix,$telephones,$soldes, $clients, $transactions);
 
         
-    } while(1 !== 0);
+    } while($choix !== 0);
 
 
 
