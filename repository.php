@@ -7,10 +7,10 @@
 
     function saisirWallet(){
         $wallet = [];
-        $wallet['client'] = readline("Entrer votre nom :");
-        $wallet['telephone'] = readline("Entrer votre telephone :");
-        $wallet['code'] = readline("Entrer votre secret :");
-        $wallet['solde'] = 0;
+        $wallet[] = readline("Entrer votre nom :");
+        $wallet[] = readline("Entrer votre telephone :");
+        $wallet[] = readline("Entrer votre secret :");
+        $wallet[] = 0;
 
         return $wallet;
     }
@@ -21,10 +21,10 @@
         global $codes;
         global $soldes;
 
-        $clients[] = $nouveauWallet['client'];
-        $telephones[] = $nouveauWallet['telephone'];
-        $codes[] = $nouveauWallet['code'];
-        $soldes[] = $nouveauWallet['solde'];
+        $clients[] = $nouveauWallet[0];
+        $telephones[] = $nouveauWallet[1];
+        $codes[] = $nouveauWallet[2];
+        $soldes[] = $nouveauWallet[3];
     }
     
     function depot(int $somme, int $index, array &$soldes){

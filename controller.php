@@ -2,24 +2,21 @@
     require_once "validator.php";
     require_once "repository.php";
 
-    function choixUser(){
-        $choix = (int)readline("Entrer votre choix : ");
-        return $choix;
-    }
 
-    function controller(array $telephones, array $soldes){
-        $choix = choixUser();
+
+    function controller(string $choix, array $telephones, array $soldes){
+    
 
         switch($choix){
             case 1: 
-                echo "Crée Wallet \n";
+                echo "Creer Wallet \n";
                 $nouveauWallet = saisirWallet();
-                $valName = verifierName($nouveauWallet['client']);
-                $valTelCode = validerTelCode($nouveauWallet['telephone'], $nouveauWallet['code']);
-                $valOp = validerOperateur($nouveauWallet['telephone']);
+                $valNam = verifierName($nouveauWallet[0]);
+                $valNum = validerTelCode($nouveauWallet[1] , $nouveauWallet[2]);
+                $valOp = validerOperateur($nouveauWallet[1]);
 
-                if($valName !== 7 || $valTelCode !== 7 || $valOp !== 7){
-                    echo "saisie incorrect ! \n";
+                if($valNam !== 7 || $valNum !== 7 || $valOp !== 7) {
+                    echo "Saisie incorrect ! \n";
                 } else {
                     creerWallet($nouveauWallet);
                     echo "compte crée avec succes ! \n";
@@ -27,22 +24,28 @@
                 break;
             case 2: 
                 echo "Faire Depot \n";
-                $tel = readline("Entrer le numero : ");
-                $indexTel = retournerIndex($tel, $telephones);
-                if($indexTel === -1){
-                    echo "compte inexistant";
+                $numb = readline("Entrer votre numero :");
+                $indexNumb = retournerIndex($numb, $telephones);
+
+                if($indexNumb === -1){
+                    echo "compte introuvable ! \n";
                 } else {
+
                     $montant = (int)readline("Entrer le montant a deposer : ");
                     $valSolde = verifierMontant($montant, 100);
-                    
+
                     if($valSolde !== 4){
-                        $soldes[$indexTel] += $montant;
-                        $transactions[$indexTel][] = $montant;
+                        depot($montant, $indexNumb, $soldes);
+                        $transactions[$indexNumb][] = $montant;
                         echo "Depot reussi ! \n";
                     } else {
                         echo "depot impossible avec ce montant ! \n";
-                    }       
+                    }  
                 }
+                break;
+            case 3:
+                echo "Faire Retrait \n";
+                
             
         }
     }
